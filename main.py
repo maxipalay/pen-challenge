@@ -133,7 +133,7 @@ try:
         bw_image = cv2.cvtColor(color_image, cv2.COLOR_RGB2GRAY)
 
         # apply erosion filter to mask
-        kernel = np.ones((10, 10), np.uint8)
+        kernel = np.ones((5, 5), np.uint8)
         img_erosion = cv2.erode(bw_image, kernel, iterations=1)
         
         # get contours
