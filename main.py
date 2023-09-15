@@ -96,6 +96,7 @@ try:
         tolerance = val
     
     cv2.namedWindow(title_window, cv2.WINDOW_NORMAL)
+    cv2.namedWindow(title_window, cv2.WINDOW_NORMAL)
     cv2.createTrackbar(trackbar_name_hue, title_window , threshold_hue, hue_slider_max, mod_threshold_hue)
     cv2.createTrackbar(trackbar_name_sat, title_window , threshold_sat, sat_slider_max, mod_threshold_sat)
     cv2.createTrackbar(trackbar_name_tol, title_window , tolerance, tol_slider_max, mod_tol)
@@ -120,17 +121,17 @@ try:
         # apply gaussian filter
         color_image = cv2.GaussianBlur(color_image,(5,5),0)
         # convert to hsv
-        hsv_color_image = np.asanyarray(cv2.cvtColor(color_image, cv2.COLOR_RGB2HSV))
+        hsv_color_image = np.asanyarray(cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV))
 
         # apply thresholds
         hsv_color_image[:,:,2] = np.asanyarray(threshol_hue(hsv_color_image[:,:,0], hsv_color_image[:,:,2], threshold_hue)) #val
         hsv_color_image[:,:,2] = np.asanyarray(threshol_sat(hsv_color_image[:,:,1], hsv_color_image[:,:,2], threshold_sat)) #val
 
         # get our thresholded RGB image  
-        color_image = cv2.cvtColor(hsv_color_image, cv2.COLOR_HSV2RGB)
+        color_image = cv2.cvtColor(hsv_color_image, cv2.COLOR_HSV2BGR)
 
         # convert our thresholded image to grayscale (mask)
-        bw_image = cv2.cvtColor(color_image, cv2.COLOR_RGB2GRAY)
+        bw_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
 
         # apply erosion filter to mask
         kernel = np.ones((5, 5), np.uint8)
