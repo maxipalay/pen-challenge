@@ -1,3 +1,5 @@
+# This script is based on an example provided by Prof. Matthew Elwin
+
 from interbotix_xs_modules.xs_robot.arm import InterbotixManipulatorXS
 # The robot object is what you use to control the robot
 robot = InterbotixManipulatorXS("px100", "arm", "gripper")
