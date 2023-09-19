@@ -1,8 +1,7 @@
-# First import the library
+# This code is heavily based on Intel's Python API example.
+
 import pyrealsense2 as rs
-# Import Numpy for easy array manipulation
 import numpy as np
-# Import OpenCV for easy image rendering
 import cv2
 
 def vision_thread(camera_pos, lock):
@@ -12,10 +11,6 @@ def vision_thread(camera_pos, lock):
     # Create a config and configure the pipeline to stream
     #  different resolutions of color and depth streams
     config = rs.config()
-
-    # Get device product line for setting a supporting resolution
-    pipeline_wrapper = rs.pipeline_wrapper(pipeline)
-    pipeline_profile = config.resolve(pipeline_wrapper)
 
     config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
     config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
@@ -82,7 +77,6 @@ def vision_thread(camera_pos, lock):
             global tolerance
             tolerance = val
         
-        cv2.namedWindow(title_window, cv2.WINDOW_NORMAL)
         cv2.namedWindow(title_window, cv2.WINDOW_NORMAL)
         cv2.createTrackbar(trackbar_name_hue, title_window , threshold_hue, hue_slider_max, mod_threshold_hue)
         cv2.createTrackbar(trackbar_name_sat, title_window , threshold_sat, sat_slider_max, mod_threshold_sat)
@@ -161,8 +155,8 @@ def vision_thread(camera_pos, lock):
                     pass
             
             # show our image
-            #output_image = np.concatenate((color_image, color_image_copy), axis=1)
-            cv2.imshow(title_window, color_image)
+            output_image = np.concatenate((color_image, color_image_copy), axis=1)
+            cv2.imshow(title_window, output_image)
             key = cv2.waitKey(1)
             # Press esc or 'q' to close the image window
             if key & 0xFF == ord('q') or key == 27:
