@@ -52,7 +52,7 @@ def vision_thread(camera_pos, lock):
         return largest_area_cnt
 
     try:
-        title_window = 'hey'
+        title_window = 'pen tracker'
         threshold_hue = 150
         threshold_sat = 75
         tolerance = 35
